@@ -1,0 +1,30 @@
+Category: Legal
+---
+Title: NDA Template
+---
+Content:
+
+Non-Disclosure Agreement (NDA)
+This agreement is entered into by [Company Name] (“Disclosing Party”) and [Recipient Name] (“Receiving Party”).
+
+Confidential Information:
+
+Includes trade secrets, technical data, financial information, client lists, and business plans.
+
+Confidential information may be disclosed verbally, in writing, or electronically.
+
+Obligations of Receiving Party:
+
+Maintain confidentiality and do not disclose to third parties.
+
+Use confidential information only for purposes authorized by the Disclosing Party.
+
+Return or destroy all confidential materials upon request.
+
+Duration:
+
+The obligations of this NDA remain in effect for 3 years from the date of signing.
+
+Signatures:
+[Disclosing Party] ___________________
+[Receiving Party] ___________________

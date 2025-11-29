@@ -54,7 +54,7 @@
                 }
 
                 $.ajax({
-                    url: '/Home/Ask',
+                    url: '/Document/Ask',
                     type: 'GET',
                     data: { query: question },
                     success: function(data) {
@@ -87,7 +87,7 @@
                 }
 
                 $.ajax({
-                    url: '/Home/AddContent',
+                    url: '/Document/AddContent',
                     type: 'POST',
                     contentType: 'application/json',
                     data: JSON.stringify({ Title: title, Content: content, Category: category }),

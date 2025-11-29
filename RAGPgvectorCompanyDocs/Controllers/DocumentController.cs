@@ -7,12 +7,12 @@ using System.Diagnostics;
 
 namespace RAGPgvectorCompanyDocs.Controllers
 {
-    public class HomeController : Controller
+    public class DocumentController : Controller
     {
         private readonly RagService _ragService;
         private readonly TextRepository _textRepository;
 
-        public HomeController(RagService ragService, TextRepository textRepository)
+        public DocumentController(RagService ragService, TextRepository textRepository)
         {
             _ragService = ragService;
             _textRepository = textRepository;
