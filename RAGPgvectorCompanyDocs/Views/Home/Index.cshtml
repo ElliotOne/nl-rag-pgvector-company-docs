@@ -1,0 +1,107 @@
+﻿<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h3>Ask a Question</h3>
+            <div class="input-group mb-3">
+                <input type="text" id="questionInput" class="form-control" placeholder="Enter your question here..." />
+                <button class="btn btn-primary" id="askButton">Ask</button>
+            </div>
+            <div id="responseMessage" class="alert alert-info" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h3>Add Content</h3>
+
+            <div class="mb-3">
+                <label for="titleInput" class="form-label">Title</label>
+                <input type="text" id="titleInput" class="form-control" placeholder="Enter the title..." />
+            </div>
+
+            <div class="mb-3">
+                <label for="categorySelect" class="form-label">Category</label>
+                <select id="categorySelect" class="form-select">
+                    <option value="">Select a category</option>
+                    <option value="HR">HR</option>
+                    <option value="Tech">Tech</option>
+                    <option value="Sales">Sales</option>
+                    <option value="Legal">Legal</option>
+                    <option value="Culture">Culture</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <textarea id="contentTextarea" class="form-control" rows="4" placeholder="Enter content to add..."></textarea>
+            </div>
+
+            <button class="btn btn-success" id="addContentButton">Add Content</button>
+            <div id="addContentMessage" class="alert alert-info mt-3" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('#askButton').click(function() {
+                var question = $('#questionInput').val().trim();
+                if (question === '') {
+                    $('#responseMessage').removeClass('alert-success').addClass('alert-danger').text('Please enter a question.').show();
+                    return;
+                }
+
+                $.ajax({
+                    url: '/Home/Ask',
+                    type: 'GET',
+                    data: { query: question },
+                    success: function(data) {
+                        $('#responseMessage').removeClass('alert-danger').addClass('alert-success').text(data.response.response).show();
+                    },
+                    error: function(xhr, status, error) {
+                        $('#responseMessage').removeClass('alert-success').addClass('alert-danger').text('Error: ' + xhr.responseText).show();
+                    }
+                });
+            });
+
+          $('#addContentButton').click(function() {
+                var title = $('#titleInput').val().trim();
+                var category = $('#categorySelect').val();
+                var content = $('#contentTextarea').val().trim();
+
+                if (title === '') {
+                    $('#addContentMessage').removeClass('alert-success').addClass('alert-danger').text('Please enter a title.').show();
+                    return;
+                }
+
+                if (category === '') {
+                    $('#addContentMessage').removeClass('alert-success').addClass('alert-danger').text('Please select a category.').show();
+                    return;
+                }
+
+                if (content === '') {
+                    $('#addContentMessage').removeClass('alert-success').addClass('alert-danger').text('Please enter content.').show();
+                    return;
+                }
+
+                $.ajax({
+                    url: '/Home/AddContent',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ Title: title, Content: content, Category: category }),
+                    success: function(data) {
+                        $('#addContentMessage').removeClass('alert-danger').addClass('alert-success').text(data).show();
+                        $('#titleInput').val(''); // Clear title input
+                        $('#categorySelect').val(''); // Reset select
+                        $('#contentTextarea').val(''); // Clear the textarea
+                    },
+                    error: function(xhr, status, error) {
+                        $('#addContentMessage').removeClass('alert-success').addClass('alert-danger').text('Error: ' + xhr.responseText).show();
+                    }
+                });
+            });
+        });
+    </script>
+}
