@@ -25,13 +25,20 @@ A web application demonstrating Retrieval-Augmented Generation (RAG) for company
 
 ## Setup
 
-1. **Set up PostgreSQL with pgvector:**
-   - Install PostgreSQL and enable the pgvector extension:
+1. **Database Configuration:**
+   - The project is currently configured to use a Neon PostgreSQL database as specified in `appsettings.json`. The `Docs` folder contains sample company documents (e.g., Employee Handbook, NDA Template, Team Values) that have already been uploaded to this Neon database for demonstration purposes.
+   - If you need to create a new database on Neon:
+     - Sign up at [Neon](https://neon.tech/) and create a new project.
+     - Obtain the connection string and update it in `appsettings.json`.
+   - Alternatively, for local development, you can use a local pgvector setup with Docker:
+     - Run PostgreSQL with pgvector using Docker:
+       ```bash
+       docker run -d --name pgvector -e POSTGRES_PASSWORD=postgres -p 5432:5432 pgvector/pgvector:pg16
+       ```
+     - Uncomment the local connection string in `appsettings.json` and comment out the Neon one.
+   - Enable the pgvector extension and create the table:
      ```sql
      CREATE EXTENSION vector;
-     ```
-   - Create the database and table:
-     ```sql
      CREATE TABLE text_contexts (
          id SERIAL PRIMARY KEY,
          title TEXT NOT NULL,
@@ -40,7 +47,6 @@ A web application demonstrating Retrieval-Augmented Generation (RAG) for company
          embedding vector(4096)
      );
      ```
-   - Update the connection string in `appsettings.json` if needed.
 
 2. **Install and Start Ollama:**
    - Download Ollama from [ollama.ai](https://ollama.ai/), install and launch it.
@@ -110,12 +116,12 @@ NuGet packages required (see `.csproj`):
 ## Project Structure
 
 - `Program.cs`: Entry point and service registration
-- `Controllers/HomeController.cs`: Handles web requests for Q&A and adding content
+- `Controllers/DocumentController.cs`: Handles web requests for Q&A and adding content
 - `Services/RagService.cs`: Orchestrates retrieval and generation
 - `Repository/TextRepository.cs`: Manages text storage and retrieval with pgvector
 - `EmbeddingGenerator/`: Interfaces and implementations for generating embeddings via Ollama
 - `Models/`: Data models for requests and responses
-- `Views/Home/Index.cshtml`: Web interface for interaction
+- `Views/Document/Index.cshtml`: Web interface for interaction
 
 ## License
 
